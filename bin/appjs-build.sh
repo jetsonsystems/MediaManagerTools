@@ -24,6 +24,7 @@ echo "Building in $BUILD_DIR"
 cd $BUILD_DIR
 
 git clone git@github.com:appjs/appjs.git
+# git clone git@github.com:jetsonsystems/appjs.git
 export NVERSION="0.8.11";
 export CEFVERSION="1.1180.724";
 export N32BASE=`pwd`/appjs/node-32/${NVERSION}
@@ -41,9 +42,10 @@ make install
 cd ../../..
 
 export PATH="${N32BASE}/bin:${PATH}"
-npm install -g node-gyp
+# npm install -g node-gyp
+./node-32/0.8.11/bin/npm  install ./node-32/0.8.11/lib/node_modules/npm/node_modules/node-gyp/ -g
 mkdir node_modules
-npm install mime
+./node-32/0.8.11/bin/npm install mime
 
 mkdir deps
 pushd deps
@@ -59,8 +61,8 @@ pushd data/mac/node-bin/
 ln -s ../../../node-32/0.8.11 node
 popd
 
-node-gyp configure
-node-gyp build
+./node-32/0.8.11/bin/node ./node-32/0.8.11/bin/node-gyp configure
+./node-32/0.8.11/bin/node ./node-32/0.8.11/bin/node-gyp build
 
 pushd app/data/bin
 echo "Linking in `pwd`..."
