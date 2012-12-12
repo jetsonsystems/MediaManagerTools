@@ -23,8 +23,17 @@ echo "Building in $BUILD_DIR"
 
 cd $BUILD_DIR
 
-git clone git@github.com:appjs/appjs.git
-# git clone git@github.com:jetsonsystems/appjs.git
+#
+# git clone git@github.com:appjs/appjs.git
+#
+# Clone from our repo which is a fork.
+# The binding.gyp has been modified on line 289 as follows:
+#
+#   cef_dll_wrapper.a -> cef_dll_wrapper.node
+#
+# Otherwise the mac build fails.
+#
+git clone git@github.com:jetsonsystems/appjs.git
 export NVERSION="0.8.11";
 export CEFVERSION="1.1180.724";
 export N32BASE=`pwd`/appjs/node-32/${NVERSION}
