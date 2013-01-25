@@ -273,7 +273,12 @@ var doBatch = function(batchNum, batchDoneCallback) {
         callback(syncMonitor.errorEvent);
       });
 
-      syncResource.doRequest('POST', options);
+      try {
+        syncResource.doRequest('POST', options);
+      }
+      catch (err) {
+        callback('sync.error - ' + err);
+      }
     }
   ], function(err, results) {
     logger.info({ event: '__batchDone__',
