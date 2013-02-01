@@ -37,9 +37,12 @@ Options:
 Utility to run a performance test on syncronization between a local and remote database.
 For example, the following invokation could be used:
 
-`
+```
 nohup ./bin/node MediaManagerTools/bin/perf-test.js -d plm-media-manager-perf-test -n 100 /Users/marekjulian/SoftwareDev/JetsonSystems/Projects/PLM/MediaManager/CouchStorage/PerfTest//TestData/Batch100/ &> per-test.out &
-`
+```
+
+## ./bin/monitor-changes-feed.js
+
 
 
 
