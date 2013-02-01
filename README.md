@@ -20,7 +20,7 @@ Performs a one time sync between the 2 databases found in the App configuration.
 
 ## ./bin/perf-test.js
 
-`
+```
 Usage: node ./bin/perf-test.js [<options>] <data dir>
 
 Media Managager Performance Test Script.
@@ -32,7 +32,7 @@ Options:
   -H, --remote-dbhost  remote TouchDB / CouchDB host.       
   -P, --remote-dbport  remote TouchDB / CouchDB port number.
   -n, --num-batches    number of batches to run               [default: 1]
-`
+```
 
 Utility to run a performance test on syncronization between a local and remote database.
 For example, the following invokation could be used:
