@@ -7,8 +7,8 @@ function isConnectionEstablished(parsedMsg) {
   return (parsedMsg.resource === '/notifications' && parsedMsg.event === 'connection.established');
 };
 
-function isSyncEvent(parsedMsg) {
-  return (parsedMsg.resource === '/storage/synchronizers');
+function isImportEvent(parsedMsg) {
+  return (parsedMsg.resource === '/importers');
 };
 
 function doSubscriptions() {
@@ -16,32 +16,32 @@ function doSubscriptions() {
 	  "resource": "_client", 
 	  "event": "subscribe",
 	  "data": {
-		  "resource": "/storage/synchronizers" 
+		  "resource": "/importers" 
 	  }}));
 };
 
-function doSync() {
+function doImport() {
   var urlVersion = "v0";
 
-  var syncResource = new mmApi.StorageSynchronizers('/storage/synchronizers',
-                                                    {instName: 'synchronizer',
-                                                     pathPrefix: '/' + urlVersion });
+  var importResource = new mmApi.Importers('/importers',
+                                           {instName: 'importer',
+                                            pathPrefix: '/' + urlVersion });
 
   function onSuccess(responseBody) {
-    console.log('onSuccess: Handling - POST /storage/synchronizers, response payload of length - ' + JSON.stringify(responseBody).length);
+    console.log('onSuccess: Handling - POST /importers, response payload of length - ' + JSON.stringify(responseBody).length);
   };
 
   function onError(responseBody) {
-    console.log('onError: Handling - POST /storage/synchronizers, response payload - ' + JSON.stringify(responseBody));
+    console.log('onError: Handling - POST /importers, response payload - ' + JSON.stringify(responseBody));
   };
 
   var options = {
     onSuccess: onSuccess,
     onError: onError,
-    attr: {}
+    attr: { import_dir: '/Users/marekjulian/PLM' }
   };
 
-  syncResource.doRequest('POST', options);
+  importResource.doRequest('POST', options);
 };
 
 ws.onmessage = function(msg) {
@@ -49,9 +49,9 @@ ws.onmessage = function(msg) {
   var parsedMsg = JSON.parse(msg.data);
   if (isConnectionEstablished(parsedMsg)) {
     doSubscriptions();
-    doSync();
-  } else if (isSyncEvent(parsedMsg)) {
-   console.log('ws.onmessage: Sync event, message - ' + msg.data + ', data - ' + JSON.stringify(parsedMsg.data));
+    doImport();
+  } else if (isImportEvent(parsedMsg)) {
+    console.log('ws.onmessage: Import event, message - ' + msg.data + ', data - ' + JSON.stringify(parsedMsg.data));
   }
 };
 
