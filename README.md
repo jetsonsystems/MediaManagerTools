@@ -10,6 +10,31 @@ USAGE: appjs-build.sh <install directory>
 
 Builds appjs. Only tested on Mac OSX.
 
+## ./bin/asset-manager.js
+
+```
+USAGE: node ./bin/asset-manager.js
+
+Options:
+
+  -d, --dbname         Database name.                       
+  -h, --local-dbhost   local TouchDB / CouchDB host.        
+  -p, --local-dbport   local TouchDB / CouchDB port number.
+  -l, --live:          Do a live run uploading assets to Google Drive.
+                       Otherwise, do a dry run where uploads are NOT actually 
+                       performed and activity is logged.
+  -u, --db-update-seq  TouchDB / CouchDB update seq. to start monitor
+                       the changes feed from.
+```
+
+Instantiates an instance of the [MediaManagerAppSupport](https://github.com/jetsonsystems/MediaManager/blob/master/MediaManagerAppSupport/README.md) [Asset Manager](https://github.com/jetsonsystems/MediaManager/blob/master/MediaManagerAppSupport/lib/AssetManager.js).
+
+The utility must connect to the changes feed of a touchdb/couchdb instance. By default the database is connected to using paramaters defined in the [Media Manager Application Config](https://github.com/jetsonsystems/MediaManager/blob/master/MediaManagerAppConfig/README.md).
+
+Individual paramaters from the [Media Manager Application Config](https://github.com/jetsonsystems/MediaManager/blob/master/MediaManagerAppConfig/README.md) may be overriden using the -d, -h, and -p command line options.
+
+Perhaps, the easiest way to use the utility is to start the [PLM desktop application, PlmApp](https://github.com/jetsonsystems/PlmApp) which will in turn start an instance of TouchDB which runs on a port consistent with the [Media Manager Application Config](https://github.com/jetsonsystems/MediaManager/blob/master/MediaManagerAppConfig/README.md).
+
 ## ./bin/run-sync.js
 
 `

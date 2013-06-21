@@ -1,0 +1,46 @@
+{
+  "replaceConsole":"false",
+  "appenders" : [
+    {
+      "type": "console",
+      "category": "console",
+      "level": "TRACE",
+      "layout" : {
+        "type": "pattern",
+        "pattern": "%d | %p | %c | %m"
+      }
+    },
+    {
+      "type":"logLevelFilter"
+      ,"level":"ERROR"
+      ,"appender": {
+        "type": "console"
+        ,"layout" : {
+          "type": "pattern"
+          ,"pattern": "%d | %p | %c | %m"
+        }
+      }
+    },
+    {
+      "type":"logLevelFilter"
+      ,"category": [
+        "plm.MediaManagerApp", 
+        "plm.MediaManagerAppSupport", 
+        "plm.MediaManagerStorage", 
+        "plm.MediaManagerApi", 
+        "plm.ImageService", 
+        "plm.ImageService.nano"
+      ]
+      ,"level":"INFO"
+      ,"appender": {
+        "type":"file"
+        ,"filename": "var/log/plm.log"
+        ,"backups": 10
+        ,"layout" : {
+          "type": "pattern"
+          ,"pattern": "%d | %p | %c | %m"
+        }
+      }
+    }
+  ]
+}
