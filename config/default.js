@@ -55,6 +55,14 @@ var storageConfig = {
     account: {
       type: 'gdrive',
       user: 'marek@jetsonsys.com'
+    },
+    locations: {
+      originals: {
+        assetType: "original",
+        root: "appdata",
+        basePath: "/media/images/originals/",
+        folderId: undefined
+      }
     }
   }
 };
