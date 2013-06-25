@@ -56,6 +56,7 @@ var storageConfig = {
       type: 'gdrive',
       user: 'marek@jetsonsys.com'
     },
+    logOnly: true,
     locations: {
       originals: {
         assetType: "original",
@@ -71,15 +72,18 @@ var storageConfig = {
 //
 // linkedAccountsConfig: Config for external accounts which are linked to PLM.
 //
-var linkedAccountsConfig = [
-  {
+var linkedAccountsConfig = {
+  "test-google-account": {
     type: 'gdrive',
-    user: 'marek@jetsonsys.com',
-    code: "4/XXRRfEVWt0IM6Cydw7GUDUKHvadJ.4kncK5inmIsRMqTmHjyTFGOi7OpxfgI",
-    accessToken: "ya29.AHES6ZT8TDGk2Mr6295AVvGGqyBqPHl1bQUCRJSug261KA",
-    refreshToken: "1/Ycm6I2NtZ_BG0tDtt0mvsW4_s3xSC3kDf_bysAUmawU"
+    name: 'test-google-account',
+    user: undefined,
+    code: undefined,
+    clientId: undefined,
+    clientSecret: undefined,
+    accessToken: undefined,
+    refreshToken: undefined
   }
-];
+};
 
 var config = {
   app: appConfig,

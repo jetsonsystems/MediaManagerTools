@@ -68,6 +68,33 @@ nohup ./bin/node MediaManagerTools/bin/perf-test.js -d plm-media-manager-perf-te
 
 ## ./bin/monitor-changes-feed.js
 
+## ./bin/asset-manager.js
+
+```
+USAGE node ./bin/asset-manager.js [<options>]
+
+Options:
+  -H, --help           Print this help.                                                           
+  -l, --live           Do a live run as opposed to logging only.                                    [boolean]
+  -d, --dbname         Database name.                                                             
+  -h, --local-dbhost   local TouchDB / CouchDB host.                                                [boolean]
+  -p, --local-dbport   local TouchDB / CouchDB port number.                                       
+  -u, --db-update-seq  TouchDB / CouchDB update sequence to start monitoring the changes feed from
+  -w, --wait-sec       Wait at least this many seconds before exiting...                            [default: 10000]
+
+```
+
+Instantiates the asset manager which:
+
+  1. Monitors the DB for new assets.
+  1. Uploads relevant assets to external storage via a linked account. External storage and linked accounts are specified in the application configuration.
+  
+For example:
+
+`
+node ./bin/asset-manager.js -l -w 100000
+`
+
 
 
 

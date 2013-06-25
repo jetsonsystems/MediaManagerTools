@@ -10,12 +10,18 @@
 
 var opts = require('optimist')
   .boolean('v')
+  .boolean('h')
   .boolean('l')
+  .default('w', 10000)
   .usage('Usage: $0 [<options>]\n\nMedia Managager Asset Manager Test Script.')
   .options({
+    'H' : {
+      'alias' : 'help',
+      'describe' : 'Print this help.'
+    },
     'l' : {
       'alias': 'live',
-      'describe': 'Do a live run as opposed to a dry run.'
+      'describe': 'Do a live run as opposed to logging only.'
     },
     'd' : {
       'alias' : 'dbname',
@@ -32,6 +38,10 @@ var opts = require('optimist')
     'u' : {
       'alias' : 'db-update-seq',
       'describe' : 'TouchDB / CouchDB update sequence to start monitoring the changes feed from'
+    },
+    'w' : {
+      'alias' : 'wait-sec',
+      'describe' : 'Wait at least this many seconds before exiting...'
     }
   });
 
@@ -49,10 +59,18 @@ if (!argsOk) {
   process.exit(1);
 }
 
+if (argv.H) {
+  opts.showHelp();
+  process.exit(1);
+}
+
+var options = {};
+
 var config = require('MediaManagerAppConfig');
 
-var options = {
-  dryRun: !argv.l
+if (argv.l) {
+  console.log('Overriding config. to do a live run.');
+  options.logOnly = false;
 };
 
 if (argv.d) {
@@ -70,13 +88,22 @@ if (argv.p) {
   config.db.local.port = argv.p;
 }
 
+var waitSec = argv.w;
+
 var storage = require('MediaManagerStorage')(config.db, {singleton: false});
 var touchdb = storage.get('touchdb');
 var assetManagerModule = require('MediaManagerAppSupport/lib/AssetManager');
 
 var assetManager = undefined;
+var numPending = undefined;
 if (typeof(argv.u) === 'number') {
   assetManager = assetManagerModule(config, argv.u, options);
+  numPending = assetManager.numPending();
+  setTimeout(function() {
+    updateNumPending();
+  },
+             waitSec
+            );
 }
 else {
   console.log('Fetching DB info to obtain the current update sequence.');
@@ -87,6 +114,12 @@ else {
     }
     else {
       assetManager = assetManagerModule(config, infoObj.updateSeq, options);
+      numPending = assetManager.numPending();
+      setTimeout(function() {
+        updateNumPending();
+      },
+                 waitSec
+                );
     }
   });
 }
@@ -99,8 +132,6 @@ function onExit() {
   console.log('num error: ' + assetManager.stats().numError);
   console.log('num to pending: ' + assetManager.numPending());
 };
-
-var numPending = assetManager.numPending();
 
 function updateNumPending() {
   var stats = assetManager.stats();
@@ -119,9 +150,3 @@ function updateNumPending() {
     process.exit(0);
   }
 };
-
-setTimeout(function() {
-  updateNumPending();
-},
-           10000
-);
