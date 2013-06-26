@@ -27,6 +27,8 @@
         "plm.MediaManagerApp", 
         "plm.MediaManagerAppSupport", 
         "plm.MediaManagerStorage", 
+        "plm.MediaManagerStorage.touchdb", 
+        "plm.MediaManagerStorage.touchdb.nano", 
         "plm.MediaManagerApi", 
         "plm.ImageService", 
         "plm.ImageService.nano"
